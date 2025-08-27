@@ -62,7 +62,7 @@ document.getElementById("next").onclick = () => {
 
 
     // 傳送資料到 Google Sheets API         
-   fetch("https://script.google.com/macros/s/AKfycbxAyrJ8-0uAwPIeyCJP1eicO4ITo8x2i61qm19yhaqLNmy3nkxE9IdBmx-3a-vg0mvH/exec", {
+   fetch("https://script.google.com/macros/s/AKfycbxojyCRJYEeSUjpIeBnqDPDaOSyjr5affhlZFFXoM2OPKb7GOqnbQmqkZ4IJton8li4/exec", {
        method: "POST",
        body: JSON.stringify({
            userId: userId,
