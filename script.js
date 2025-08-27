@@ -15,7 +15,7 @@ function loadQuestion() {
     document.getElementById("feedback").textContent = "";
 
     document.getElementById("question").innerHTML = `
-        <img src="transducer_b.png" alt="Question Image" style="max-width: 100%; height: auto;">
+        <img src="question.png" alt="Question Image" style="max-width: 100%; height: auto;">
     `;
 
     const optionsDiv = document.getElementById("options");
@@ -44,8 +44,8 @@ function loadQuestion() {
 document.getElementById("next").onclick = () => {
     const container = document.querySelector('.container');
     container.innerHTML = `
-        <img src="transducer_a.png" alt="Congratulations" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
-        <p style="margin-top: 20px;">請輸入您的 ID 以完成紀錄：</p>
+        <img src="answer.png" alt="Congratulations" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+        <p style="margin-top: 20px;">請輸入您的員工號以完成紀錄：</p>
         <input type="text" id="userId" placeholder="輸入 ID" style="padding: 10px; width: 80%; max-width: 300px; margin-top: 10px;">
         <button id="submitId" style="margin-top: 10px; padding: 10px 20px;">送出</button>
         <div id="submitFeedback" style="margin-top: 10px;"></div>
