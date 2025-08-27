@@ -61,18 +61,19 @@ document.getElementById("next").onclick = () => {
             }
 
 
-            // 傳送資料到 Google Sheets API
-            fetch("https://script.google.com/macros/s/AKfycbzl2f69PZQpVZ0X_ldXnINSmE7IoIhC34fY2V3DA2dve_SD8q-hH9jnv7gPuHrC7ubx/exec", {
-                method: "POST",
-                body: JSON.stringify({
-                    userId: userId,
-                    question: "transducer",
-                    result: "completed"
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
+    // 傳送資料到 Google Sheets API         
+   fetch("https://script.google.com/macros/s/AKfycbzl2f69PZQpVZ0X_ldXnINSmE7IoIhC34fY2V3DA2dve_SD8q-hH9jnv7gPuHrC7ubx/exec", {
+       method: "POST",
+       body: JSON.stringify({
+           userId: userId,
+           question: "transducer",
+           result: "completed"
+       }),
+       headers: {
+           "Content-Type": "application/json"
+       }
+   })
+
             .then(res => res.text())
             .then(response => {
                 document.getElementById("submitFeedback").textContent = "✅ 已成功送出，明天再繼續！";
