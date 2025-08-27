@@ -14,7 +14,6 @@ function loadQuestion() {
     nextButton.disabled = true;
     document.getElementById("feedback").textContent = "";
 
-    // 顯示題目圖片
     document.getElementById("question").innerHTML = `
         <img src="transducer_b.png" alt="Question Image" style="max-width: 100%; height: auto;">
     `;
@@ -52,19 +51,37 @@ document.getElementById("next").onclick = () => {
         <div id="submitFeedback" style="margin-top: 10px;"></div>
     `;
 
-    document.getElementById("submitId").onclick = () => {
-        const userId = document.getElementById("userId").value.trim();
-        if (userId === "") {
-            document.getElementById("submitFeedback").textContent = "❗請輸入有效的 ID";
-            return;
-        }
+    // 重新綁定送出按鈕事件
+    setTimeout(() => {
+        document.getElementById("submitId").onclick = () => {
+            const userId = document.getElementById("userId").value.trim();
+            if (userId === "") {
+                document.getElementById("submitFeedback").textContent = "❗請輸入有效的 ID";
+                return;
+            }
 
-        // 模擬送出資料到後台
-        console.log("送出 ID:", userId);
-
-        // 這裡可以改成實際送出到 Google Sheets 或 API
-        document.getElementById("submitFeedback").textContent = "✅ 已成功送出，感謝您的參與！";
-    };
+            // 傳送資料到 Google Sheets API（請替換為你的網址）
+            fetch("https://script.google.com/macros/s/AKfycbwlDx-5HWWcxPgSUpniZn26COmVVeuUIaPGo21jNUjHjVcZccUAyeLRFxMUdPqAxvlk/exec", {
+                method: "POST",
+                body: JSON.stringify({
+                    userId: userId,
+                    question: "transducer_b",
+                    result: "completed"
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(res => res.text())
+            .then(response => {
+                document.getElementById("submitFeedback").textContent = "✅ 已成功送出，感謝您的參與！";
+            })
+            .catch(error => {
+                document.getElementById("submitFeedback").textContent = "❌ 發生錯誤，請稍後再試。";
+                console.error("Error:", error);
+            });
+        };
+    }, 0);
 };
 
 loadQuestion();
