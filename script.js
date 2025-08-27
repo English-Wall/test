@@ -54,18 +54,19 @@ document.getElementById("next").onclick = () => {
     // 重新綁定送出按鈕事件
     setTimeout(() => {
         document.getElementById("submitId").onclick = () => {
-            const userId = document.getElementById("userId").value.trim();
-            if (userId === "") {
-                document.getElementById("submitFeedback").textContent = "❗請輸入有效的 ID";
-                return;
+            const userId = document.getElementById("userId").value.trim();    
+            if (!/^\d+$/.test(userId)) {
+            document.getElementById("submitFeedback").textContent = "❗請輸入有效的員工號";
+            return;
             }
 
-            // 傳送資料到 Google Sheets API（請替換為你的網址）
+
+            // 傳送資料到 Google Sheets API
             fetch("https://script.google.com/macros/s/AKfycbwlDx-5HWWcxPgSUpniZn26COmVVeuUIaPGo21jNUjHjVcZccUAyeLRFxMUdPqAxvlk/exec", {
                 method: "POST",
                 body: JSON.stringify({
                     userId: userId,
-                    question: "transducer_b",
+                    question: "transducer",
                     result: "completed"
                 }),
                 headers: {
@@ -74,7 +75,7 @@ document.getElementById("next").onclick = () => {
             })
             .then(res => res.text())
             .then(response => {
-                document.getElementById("submitFeedback").textContent = "✅ 已成功送出，感謝您的參與！";
+                document.getElementById("submitFeedback").textContent = "✅ 已成功送出，明天再繼續！";
             })
             .catch(error => {
                 document.getElementById("submitFeedback").textContent = "❌ 發生錯誤，請稍後再試。";
