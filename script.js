@@ -50,31 +50,39 @@ document.getElementById("next").onclick = () => {
   document.getElementById("submission").style.display = "block";
 };
 
-document.getElementById("next").onclick = () => {
-  document.getElementById("submission").style.display = "block";
-};
-
 document.getElementById("submit").onclick = () => {
   const id = document.getElementById("idNumber").value.trim();
-  const wordOfDay = document.getElementById("wordOfDay").value.trim();
+  const word = document.getElementById("wordOfDay").value.trim();
+  const status = document.getElementById("submitFeedback");
 
-  if (!id || !wordOfDay) {
-    document.getElementById("submitFeedback").textContent = "❗未完成輸入";
+  // 驗證 ID 是否為數字
+  if (!/^\d+$/.test(id)) {
+    status.textContent = "❗ ID must be numeric.";
     return;
   }
 
-  fetch('https://script.google.com/macros/s/AKfycbx8k5KnV6zp5aEkTx0cvAIlIy--xRNXOYZKyRU9BlCP6LN4Oi_uQHvF1IRTkMiHqL-M/exec', {
-    method: 'POST',
-    mode: 'no-cors',
+  // 驗證 word 是否為英文字母
+  if (!/^[a-zA-Z]+$/.test(word)) {
+    status.textContent = "❗ Word must contain only English letters.";
+    return;
+  }
+
+  status.textContent = "Submitting...";
+
+  fetch("https://script.google.com/macros/s/你的網址/exec", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `id=${encodeURIComponent(id)}&wordOfDay=${encodeURIComponent(wordOfDay)}`
+    body: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
+  })
+  .then(() => {
+    status.textContent = "✅ Submitted!";
+    document.getElementById("submit").disabled = true;
+  })
+  .catch(() => {
+    status.textContent = "❌ Submission failed. Try again.";
   });
-
-  document.getElementById("submitFeedback").textContent = "✅ Submitted! Thank you.";
-  document.getElementById("submit").disabled = true;
 };
-
 
 loadQuestion();
