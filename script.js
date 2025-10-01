@@ -54,28 +54,31 @@ document.addEventListener('DOMContentLoaded', () => {
     moveLetter(e.target, puzzleDiv);
   }
 
-  function checkAnswer() {
-    const currentWord = questions[currentQuestionIndex].word;
-    const answer = Array.from(answerDiv.children).map(l => l.textContent).join('');
-    if (answer === currentWord) {
-      resultDiv.textContent = 'Correct!';
-      resultDiv.style.color = 'green';
-      showRewardButton();
+function checkAnswer() {
+  const current = questions[currentQuestionIndex];
+  const currentWord = current.word;
+  const answer = Array.from(answerDiv.children).map(l => l.textContent).join('');
 
-      const meaningDiv = document.createElement('div');
-      meaningDiv.innerHTML = `<strong>${currentWord}：${current.meaning}</strong>`;
-      meaningDiv.style.marginTop = '8px';
-      meaningDiv.style.marginBottom = '4px';
-      meaningDiv.style.fontSize = '18px';
-      meaningDiv.style.color = '#333';
-      puzzleDiv.innerHTML = '';
-      puzzleDiv.appendChild(meaningDiv);
-    } else {
-      resultDiv.textContent = 'Try Again!';
-      resultDiv.style.color = 'red';
-      setTimeout(loadQuestion, 1200);
-    }
+  if (answer === currentWord) {
+    resultDiv.textContent = 'Correct!';
+    resultDiv.style.color = 'green';
+    showRewardButton();
+
+    const meaningDiv = document.createElement('div');
+    meaningDiv.innerHTML = `<strong>${currentWord}：${current.meaning}</strong>`;
+    meaningDiv.style.marginTop = '8px';
+    meaningDiv.style.marginBottom = '4px';
+    meaningDiv.style.fontSize = '18px';
+    meaningDiv.style.color = '#333';
+
+    puzzleDiv.innerHTML = '';
+    puzzleDiv.appendChild(meaningDiv);
+  } else {
+    resultDiv.textContent = 'Try Again!';
+    resultDiv.style.color = 'red';
+    setTimeout(loadQuestion, 1200);
   }
+}
 
   function loadQuestion() {
     puzzleDiv.innerHTML = '';
