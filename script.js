@@ -50,12 +50,16 @@ document.getElementById("next").onclick = () => {
   document.getElementById("submission").style.display = "block";
 };
 
+document.getElementById("next").onclick = () => {
+  document.getElementById("submission").style.display = "block";
+};
+
 document.getElementById("submit").onclick = () => {
   const id = document.getElementById("idNumber").value.trim();
-  const word = document.getElementById("word").value;
+  const wordOfDay = document.getElementById("wordOfDay").value.trim();
 
-  if (!id) {
-    document.getElementById("submitFeedback").textContent = "❗ Please enter your ID number.";
+  if (!id || !wordOfDay) {
+    document.getElementById("submitFeedback").textContent = "❗ Please fill in both fields.";
     return;
   }
 
@@ -65,11 +69,12 @@ document.getElementById("submit").onclick = () => {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
+    body: `id=${encodeURIComponent(id)}&wordOfDay=${encodeURIComponent(wordOfDay)}`
   });
 
   document.getElementById("submitFeedback").textContent = "✅ Submitted! Thank you.";
   document.getElementById("submit").disabled = true;
 };
+
 
 loadQuestion();
