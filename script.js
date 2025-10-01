@@ -63,7 +63,7 @@ document.getElementById("submit").onclick = () => {
     return;
   }
 
-  fetch('https://script.google.com/macros/s/AKfycbxzZz9ax_VSA2TFG0PNebQU9_I_XRj9-g0uKQHnPAptzZILXi3F227Or7G476F-F12flQ/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbx8k5KnV6zp5aEkTx0cvAIlIy--xRNXOYZKyRU9BlCP6LN4Oi_uQHvF1IRTkMiHqL-M/exec', {
     method: 'POST',
     mode: 'no-cors',
     headers: {
