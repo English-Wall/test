@@ -59,7 +59,7 @@ document.getElementById("submit").onclick = () => {
   const wordOfDay = document.getElementById("wordOfDay").value.trim();
 
   if (!id || !wordOfDay) {
-    document.getElementById("submitFeedback").textContent = "❗ Please fill in both fields.";
+    document.getElementById("submitFeedback").textContent = "❗未完成輸入";
     return;
   }
 
