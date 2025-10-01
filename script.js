@@ -57,13 +57,13 @@ document.getElementById("submit").onclick = () => {
 
   // 驗證 ID 是否為數字
   if (!/^\d+$/.test(id)) {
-    status.textContent = "❗ ID must be numeric.";
+    status.textContent = "❗ 請輸入正確的數字員工號";
     return;
   }
 
   // 驗證 word 是否為英文字母
   if (!/^[a-zA-Z]+$/.test(word)) {
-    status.textContent = "❗ Word must contain only English letters.";
+    status.textContent = "❗ 請輸入正確的英文單字";
     return;
   }
 
@@ -75,7 +75,6 @@ document.getElementById("submit").onclick = () => {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    // 修正拼寫錯誤：ody -> body
     body: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
   })
   .then(response => response.json()) // 解析從 Apps Script 回傳的 JSON
