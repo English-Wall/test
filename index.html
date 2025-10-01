@@ -1,30 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Fill in the Blanks</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <title>Fill in the Blanks</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Fill in the Blanks</h1>
-        
-        <div id="question"></div>
-        <div id="options"></div>
-        <div id="feedback"></div>
-        
-        <button id="next" style="display: none;">Next</button>
-        
-        <div id="id-form-container" style="display: none;">
-            <h3>請輸入你的 ID Number：</h3>
-            <input type="text" id="id-input" placeholder="Enter your ID here">
-            <button id="submit-id">送出</button>
-            <div id="submit-feedback"></div>
-        </div>
-    </div>
+  <div class="container">
+    <h1>Fill in the Blanks</h1>
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="feedback"></div>
+    <button id="next">Enter ID number to get reward!</button>
 
-    </body>
+    <div id="submission" style="display: none; margin-top: 20px;">
+      <input type="text" id="idNumber" placeholder="Enter your ID number" />
+      <input type="text" id="word" value="bubbles" readonly />
+      <button id="submit">Submit</button>
+      <div id="submitFeedback"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
