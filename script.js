@@ -151,8 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // TODO: 改成你的 Google Apps Script 部署網址
-    const scriptURL = "你的Google Apps Script網址";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxN_QRhW6F7ogSh_twhLlfMZNbSyGlzip3AmhiWHt1wJ0It4fReU53RJ5Ub5w_nWTLE/exec";
 
     fetch(scriptURL, {
       method: "POST",
