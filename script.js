@@ -80,26 +80,31 @@ function checkAnswer() {
   }
 }
 
-  function loadQuestion() {
-    puzzleDiv.innerHTML = '';
-    answerDiv.innerHTML = '';
-    resultDiv.textContent = '';
-    hintBtn.disabled = false;
-    rewardBtn.style.display = 'none';
-    submissionDiv.style.display = 'none';
-    rewardShown = false;
+function loadQuestion() {
+  puzzleDiv.innerHTML = '';
+  answerDiv.innerHTML = '';
+  resultDiv.textContent = '';
+  hintBtn.disabled = false;
+  rewardBtn.style.display = 'none';
+  submissionDiv.style.display = 'none';
+  rewardShown = false;
 
-    const current = questions[currentQuestionIndex];
-    hintP.textContent = `Hint: ${current.hint}`;
-    shuffleWord(current.word).forEach(char => {
-      const letter = document.createElement('div');
-      letter.className = 'letter';
-      letter.textContent = char;
-      letter.style.backgroundColor = getRandomColor();
-      letter.addEventListener('click', handlePuzzleLetterClick);
-      puzzleDiv.appendChild(letter);
-    });
-  }
+  // 隨機抽一題
+  const current = questions[Math.floor(Math.random() * questions.length)];
+
+  hintP.textContent = `Hint: ${current.hint}`;
+  shuffleWord(current.word).forEach(char => {
+    const letter = document.createElement('div');
+    letter.className = 'letter';
+    letter.textContent = char;
+    letter.style.backgroundColor = getRandomColor();
+    letter.addEventListener('click', handlePuzzleLetterClick);
+    puzzleDiv.appendChild(letter);
+  });
+
+  // 記錄當前題目（方便 checkAnswer 使用）
+  window.currentQuestion = current;
+}
 
   function showRewardButton() {
     if (rewardShown) return;
