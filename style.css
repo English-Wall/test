@@ -1,60 +1,58 @@
 :root {
-    --bg-color: #ffffff;
-    --text-color: #333333;
-    --correct-color: #4CAF50;
-    --incorrect-color: #F44336;
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --correct-color: #4CAF50;
+  --incorrect-color: #F44336;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    background: var(--bg-color);
-    font-family: 'Poppins', sans-serif;
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px 20px;
-
+  background: var(--bg-color);
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px 20px;
 }
 
 .container {
-    width: 100%;
-    max-width: 800px;
-    text-align: center;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
 }
 
 h1 {
-    color: var(--text-color);
-    margin-bottom: 0rem;
-    font-weight: 500;
+  margin-bottom: 0rem;
+  font-weight: 350;
 }
 
 #question {
-    margin-bottom: 2rem;
+  margin-bottom: 0rem;
 }
 
 #options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1rem;
 }
 
 .option-btn {
-    flex: 0 0 calc(50% - 12px);
-    padding: 15px;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    font-weight: 400;
-    color: #333333;
+  flex: 0 0 calc(50% - 10px);
+  padding: 12px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  font-weight: 350;
+  color: #333333;
 }
 
 .option-btn-1 { background-color: #D6F7B6; }
@@ -63,63 +61,88 @@ h1 {
 .option-btn-4 { background-color: #FFFFB5; }
 
 .option-btn:hover:not(:disabled) {
-    filter: brightness(1.1);
+  filter: brightness(1.1);
 }
 
 .option-btn:active:not(:disabled) {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 .option-btn.correct {
-    background: var(--correct-color);
+  background: var(--correct-color);
 }
 
 .option-btn.incorrect {
-    background: var(--incorrect-color);
+  background: var(--incorrect-color);
 }
 
 .option-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 #feedback {
-    height: 24px;
-    margin: 16px 0;
-    font-size: 1.1rem;
-    font-weight: 600;
+  height: 24px;
+  margin: 16px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 #next {
-    margin-top: 20px;
-    padding: 12px 24px;
-    background: #333333;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    font-weight: 600;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #333333;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  font-weight: 600;
 }
 
 #next:hover {
-    filter: brightness(1.1);
+  filter: brightness(1.1);
 }
 
 #next:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
-/* 響應式設計 */
-@media (max-width: 600px) {
-    .option-btn {
-        flex: 0 0 100%;
-        font-size: 1rem;
-        padding: 12px;
-    }
+#submission input {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 80%;
+  font-size: 1rem;
+}
 
-    #next {
-        width: 100%;
-    }
+#submit {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#submitFeedback {
+  margin-top: 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+@media (max-width: 600px) {
+  .option-btn {
+    flex: 0 0 100%;
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  #next {
+    width: 100%;
+  }
 }
