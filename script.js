@@ -69,7 +69,7 @@ document.getElementById("submit").onclick = () => {
 
   status.textContent = "Submitting...";
 
-  fetch("https://script.google.com/macros/s/AKfycbw70B4_vTnansPaz8PBU5H60okiA7LXi2APg--ENJx6aHvqacQKKo7Xukm9CWJkVGrA/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwA2WA5fe90TT0V1IgdW-sEbisYJCf00uiLQfanOYNZhmeRfPH23J8djQo6Uwa0rOgJ/exec", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
