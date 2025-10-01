@@ -1,5 +1,3 @@
-//修改15,16,93行
-
 document.addEventListener('DOMContentLoaded', () => {
   let rewardShown = false;
   const gameContainer = document.querySelector('.game-container');
@@ -88,16 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
       resultDiv.textContent = 'Correct!';
       resultDiv.style.color = 'green';
       showRewardButton();
-      
-      // 顯示中文意思
+
       const meaningDiv = document.createElement('div');
       meaningDiv.textContent = '磨損、刮除';
       meaningDiv.style.marginTop = '2px';
       meaningDiv.style.fontSize = '16px';
       meaningDiv.style.color = '#333';
-      puzzleDiv.innerHTML = ''; // 清空原本的字母
+      puzzleDiv.innerHTML = '';
       puzzleDiv.appendChild(meaningDiv);
-
     } else {
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
@@ -111,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resultDiv.textContent = '';
     hintBtn.disabled = false;
     rewardContainer.innerHTML = '';
+    rewardShown = false;
+
     const current = questions[currentQuestionIndex];
     hintP.textContent = `Hint: ${current.hint}`;
     shuffleWord(current.word).forEach(char => {
@@ -127,41 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function showRewardButton() {
     if (rewardShown) return;
     rewardShown = true;
+
     const rewardBtn = document.createElement('button');
     rewardBtn.textContent = 'Enter ID number to get reward!';
     rewardBtn.style.backgroundColor = 'black';
-    rewardBtn.style.color = 'white';
-    rewardBtn.style.padding = '10px 20px';
-    rewardBtn.style.marginTop = '20px';
-    rewardBtn.style.border = 'none';
-    rewardBtn.style.cursor = 'pointer';
-    rewardBtn.style.fontSize = '16px';
-    rewardBtn.onclick = () => {
-      window.open('https://script.google.com/macros/s/AKfycbz0rGKd05Jp06lKRQnGDxKF-EQRlUvXVUE-MH3OeKkpKvlNT07SkfGQznTYw4UHBxxntg/exec', '_blank');
-    };
-    rewardContainer.appendChild(rewardBtn);
-  }
-
-  answerDiv.addEventListener('dragover', e => e.preventDefault());
-  answerDiv.addEventListener('drop', e => {
-    e.preventDefault();
-    if (draggedLetter && draggedLetter.parentElement !== answerDiv) {
-      moveLetter(draggedLetter, answerDiv);
-      draggedLetter = null;
-    }
-  });
-
-  puzzleDiv.addEventListener('dragover', e => e.preventDefault());
-  puzzleDiv.addEventListener('drop', e => {
-    e.preventDefault();
-    if (draggedLetter && draggedLetter.parentElement !== puzzleDiv) {
-      moveLetter(draggedLetter, puzzleDiv);
-      draggedLetter = null;
-    }
-  });
-
-  checkBtn.addEventListener('click', checkAnswer);
-  hintBtn.addEventListener('click', giveHint);
-
-  loadQuestion();
-});
