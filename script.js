@@ -1,13 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
   let rewardShown = false;
-  const gameContainer = document.querySelector('.game-container');
   const puzzleDiv = document.querySelector('.puzzle');
   const answerDiv = document.querySelector('.answer');
   const checkBtn = document.getElementById('checkBtn');
   const hintBtn = document.getElementById('hintBtn');
   const resultDiv = document.getElementById('result');
   const hintP = document.querySelector('.hint p');
-  const rewardContainer = document.getElementById('rewardContainer');
+  const rewardBtn = document.getElementById('reward');
+  const submissionDiv = document.getElementById('submission');
+  const submitBtn = document.getElementById('submit');
+  const submitFeedback = document.getElementById('submitFeedback');
 
   const questions = [
     {
@@ -87,15 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
       resultDiv.style.color = 'green';
       showRewardButton();
 
-
-　　　const meaningDiv = document.createElement('div');
-　　　meaningDiv.innerHTML = `<strong>${currentWord}：磨損、刮除</strong>`;
-　　　meaningDiv.style.marginTop = '8px';
-　　　meaningDiv.style.marginBottom = '4px';
-　　　meaningDiv.style.fontSize = '18px';
-　　　meaningDiv.style.color = '#333';
-　　　puzzleDiv.innerHTML = '';
-　　　puzzleDiv.appendChild(meaningDiv);
+      const meaningDiv = document.createElement('div');
+      meaningDiv.innerHTML = `<strong>${currentWord}：磨損、刮除</strong>`;
+      meaningDiv.style.marginTop = '8px';
+      meaningDiv.style.marginBottom = '4px';
+      meaningDiv.style.fontSize = '18px';
+      meaningDiv.style.color = '#333';
+      puzzleDiv.innerHTML = '';
+      puzzleDiv.appendChild(meaningDiv);
     } else {
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
@@ -108,7 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     answerDiv.innerHTML = '';
     resultDiv.textContent = '';
     hintBtn.disabled = false;
-    rewardContainer.innerHTML = '';
+    rewardBtn.style.display = 'none';
+    submissionDiv.style.display = 'none';
     rewardShown = false;
 
     const current = questions[currentQuestionIndex];
@@ -127,7 +129,48 @@ document.addEventListener('DOMContentLoaded', () => {
   function showRewardButton() {
     if (rewardShown) return;
     rewardShown = true;
+    rewardBtn.style.display = 'block';
+  }
 
-    const rewardBtn = document.createElement('button');
-    rewardBtn.textContent = 'Enter ID number to get reward!';
-    rewardBtn.style.backgroundColor = 'black';
+  // 綁定按鈕事件
+  checkBtn.addEventListener('click', checkAnswer);
+  hintBtn.addEventListener('click', giveHint);
+
+  rewardBtn.addEventListener('click', () => {
+    submissionDiv.style.display = 'block';
+  });
+
+  // 送資料到 Google Sheet
+  submitBtn.addEventListener('click', () => {
+    const idNumber = document.getElementById('idNumber').value.trim();
+    const wordOfDay = document.getElementById('wordOfDay').value.trim();
+
+    if (!idNumber || !wordOfDay) {
+      submitFeedback.textContent = "請完整填寫所有欄位!";
+      submitFeedback.style.color = "red";
+      return;
+    }
+
+    // TODO: 改成你的 Google Apps Script 部署網址
+    const scriptURL = "你的Google Apps Script網址";
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: new URLSearchParams({
+        idNumber: idNumber,
+        wordOfDay: wordOfDay
+      })
+    })
+    .then(response => {
+      submitFeedback.textContent = "✅ 提交成功!";
+      submitFeedback.style.color = "green";
+    })
+    .catch(error => {
+      submitFeedback.textContent = "❌ 提交失敗，請再試一次!";
+      submitFeedback.style.color = "red";
+    });
+  });
+
+  // 載入第一題
+  loadQuestion();
+});
