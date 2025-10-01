@@ -11,13 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById('submit');
   const submitFeedback = document.getElementById('submitFeedback');
 
-  const questions = [
-    {
-      word: 'abrade',
-      hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.',
-      meaning: '磨損、刮除'
-    }
-  ];
+const questions = [
+  {
+    word: 'abrade',
+    hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.',
+    meaning: '磨損、刮除'
+  },
+  {
+    word: 'benevolent',
+    hint: 'Well meaning and kindly.',
+    meaning: '仁慈的、善意的'
+  },
+  {
+    word: 'candid',
+    hint: 'Truthful and straightforward.',
+    meaning: '坦率的、直言的'
+  },
+];
 
   let currentQuestionIndex = 0;
 
@@ -55,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 function checkAnswer() {
-  const current = questions[currentQuestionIndex];
+  const current = window.currentQuestion; // 從 loadQuestion 記錄的題目
   const currentWord = current.word;
   const answer = Array.from(answerDiv.children).map(l => l.textContent).join('');
 
