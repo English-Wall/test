@@ -1,96 +1,167 @@
-const question = {
-  correct: "bubbles",
-  options: ["particles", "bubbles", "blisters"]
-};
+//修改15,16,93行
 
-function disableOptions() {
-  document.querySelectorAll('.option-btn').forEach(btn => {
-    btn.disabled = true;
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+  let rewardShown = false;
+  const gameContainer = document.querySelector('.game-container');
+  const puzzleDiv = document.querySelector('.puzzle');
+  const answerDiv = document.querySelector('.answer');
+  const checkBtn = document.getElementById('checkBtn');
+  const hintBtn = document.getElementById('hintBtn');
+  const resultDiv = document.getElementById('result');
+  const hintP = document.querySelector('.hint p');
+  const rewardContainer = document.getElementById('rewardContainer');
 
-function loadQuestion() {
-  const nextButton = document.getElementById("next");
-  nextButton.disabled = true;
-  nextButton.style.display = "none";
-  document.getElementById("feedback").textContent = "";
-
-  document.getElementById("question").innerHTML = `
-    <img src="question.png" alt="Question Image" style="max-width: 100%; height: auto;">
-  `;
-
-  const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = "";
-
-  question.options.forEach((option, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = option;
-    btn.className = `option-btn option-btn-${index + 1}`;
-    btn.onclick = () => {
-      if (option === question.correct) {
-        btn.classList.add("correct");
-        document.getElementById("feedback").textContent = "✅ Correct!";
-        disableOptions();
-        nextButton.disabled = false;
-        nextButton.style.display = "block";
-        document.getElementById("question").innerHTML = `
-          <img src="answer.png" alt="Answer Image" style="max-width: 100%; height: auto;">
-        `;
-      } else {
-        btn.classList.add("incorrect");
-        document.getElementById("feedback").textContent = "❌ Wrong. Try again.";
-        btn.disabled = true;
-      }
-    };
-    optionsDiv.appendChild(btn);
-  });
-}
-
-document.getElementById("next").onclick = () => {
-  document.getElementById("submission").style.display = "block";
-};
-
-document.getElementById("submit").onclick = () => {
-  const id = document.getElementById("idNumber").value.trim();
-  const word = document.getElementById("wordOfDay").value.trim();
-  const status = document.getElementById("submitFeedback");
-
-  // 驗證 ID 是否為數字
-  if (!/^\d+$/.test(id)) {
-    status.textContent = "❗ 請輸入正確的數字員工號";
-    return;
-  }
-
-  // 驗證 word 是否為英文字母
-  if (!/^[a-zA-Z]+$/.test(word)) {
-    status.textContent = "❗ 請輸入正確的英文單字";
-    return;
-  }
-
- status.textContent = "Submitting...";
-  document.getElementById("submit").disabled = true; // 先禁用按鈕防止重複提交
-
-  fetch("https://script.google.com/macros/s/AKfycbxN_QRhW6F7ogSh_twhLlfMZNbSyGlzip3AmhiWHt1wJ0It4fReU53RJ5Ub5w_nWTLE/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
-  })
-  .then(response => response.json()) // 解析從 Apps Script 回傳的 JSON
-  .then(data => {
-    status.textContent = data.message; // 顯示從後端傳來的訊息
-    if (data.status === 'success') {
-      document.getElementById("submit").disabled = true; // 成功後保持禁用
-    } else {
-      document.getElementById("submit").disabled = false; // 失敗後重新啟用按鈕
+  const questions = [
+    {
+      word: 'abrade',
+      hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.'
     }
-  })
-  .catch((error) => {
-    console.error("Submission error:", error);
-    status.textContent = "❌ Submission failed. Check console for details.";
-    document.getElementById("submit").disabled = false; // 發生錯誤時也重新啟用按鈕
-  });
-};
+  ];
 
-loadQuestion();
+  let currentQuestionIndex = 0;
+  let draggedLetter = null;
+
+  function shuffleWord(word) {
+    return word.split('').sort(() => Math.random() - 0.5);
+  }
+
+  function getRandomColor() {
+    const colors = ['#f7b7b7', '#b7d7f7', '#d7f7b7'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  function moveLetter(letter, targetDiv) {
+    if (!letter || letter.classList.contains('locked')) return;
+    targetDiv.appendChild(letter);
+    updateClickHandler(letter);
+  }
+
+  function updateClickHandler(letter) {
+    letter.removeEventListener('click', handlePuzzleLetterClick);
+    letter.removeEventListener('click', handleAnswerLetterClick);
+    if (letter.parentElement === puzzleDiv) {
+      letter.addEventListener('click', handlePuzzleLetterClick);
+    } else {
+      letter.addEventListener('click', handleAnswerLetterClick);
+    }
+  }
+
+  function handlePuzzleLetterClick(e) {
+    moveLetter(e.target, answerDiv);
+  }
+
+  function handleAnswerLetterClick(e) {
+    moveLetter(e.target, puzzleDiv);
+  }
+
+  function handleDragStart(e) {
+    draggedLetter = e.target;
+    e.dataTransfer.setData('text/plain', draggedLetter.textContent);
+  }
+
+  function lockLetter(letter) {
+    letter.classList.add('locked');
+    letter.setAttribute('draggable', 'false');
+    letter.removeEventListener('click', handlePuzzleLetterClick);
+    letter.removeEventListener('click', handleAnswerLetterClick);
+    letter.removeEventListener('dragstart', handleDragStart);
+  }
+
+  function giveHint() {
+    if (answerDiv.children.length > 0) {
+      hintBtn.disabled = true;
+      return;
+    }
+    const correctWord = questions[currentQuestionIndex].word;
+    const firstLetter = Array.from(puzzleDiv.children).find(l => l.textContent === correctWord[0]);
+    if (firstLetter) {
+      moveLetter(firstLetter, answerDiv);
+      lockLetter(firstLetter);
+      hintBtn.disabled = true;
+    }
+  }
+
+  function checkAnswer() {
+    const currentWord = questions[currentQuestionIndex].word;
+    const answer = Array.from(answerDiv.children).map(l => l.textContent).join('');
+    if (answer === currentWord) {
+      resultDiv.textContent = 'Correct!';
+      resultDiv.style.color = 'green';
+      showRewardButton();
+      
+      // 顯示中文意思
+      const meaningDiv = document.createElement('div');
+      meaningDiv.textContent = '磨損、刮除';
+      meaningDiv.style.marginTop = '2px';
+      meaningDiv.style.fontSize = '16px';
+      meaningDiv.style.color = '#333';
+      puzzleDiv.innerHTML = ''; // 清空原本的字母
+      puzzleDiv.appendChild(meaningDiv);
+
+    } else {
+      resultDiv.textContent = 'Try Again!';
+      resultDiv.style.color = 'red';
+      setTimeout(loadQuestion, 1200);
+    }
+  }
+
+  function loadQuestion() {
+    puzzleDiv.innerHTML = '';
+    answerDiv.innerHTML = '';
+    resultDiv.textContent = '';
+    hintBtn.disabled = false;
+    rewardContainer.innerHTML = '';
+    const current = questions[currentQuestionIndex];
+    hintP.textContent = `Hint: ${current.hint}`;
+    shuffleWord(current.word).forEach(char => {
+      const letter = document.createElement('div');
+      letter.className = 'letter';
+      letter.textContent = char;
+      letter.style.backgroundColor = getRandomColor();
+      letter.addEventListener('dragstart', handleDragStart);
+      letter.addEventListener('click', handlePuzzleLetterClick);
+      puzzleDiv.appendChild(letter);
+    });
+  }
+
+  function showRewardButton() {
+    if (rewardShown) return;
+    rewardShown = true;
+    const rewardBtn = document.createElement('button');
+    rewardBtn.textContent = 'Enter ID number to get reward!';
+    rewardBtn.style.backgroundColor = 'black';
+    rewardBtn.style.color = 'white';
+    rewardBtn.style.padding = '10px 20px';
+    rewardBtn.style.marginTop = '20px';
+    rewardBtn.style.border = 'none';
+    rewardBtn.style.cursor = 'pointer';
+    rewardBtn.style.fontSize = '16px';
+    rewardBtn.onclick = () => {
+      window.open('https://script.google.com/macros/s/AKfycbz0rGKd05Jp06lKRQnGDxKF-EQRlUvXVUE-MH3OeKkpKvlNT07SkfGQznTYw4UHBxxntg/exec', '_blank');
+    };
+    rewardContainer.appendChild(rewardBtn);
+  }
+
+  answerDiv.addEventListener('dragover', e => e.preventDefault());
+  answerDiv.addEventListener('drop', e => {
+    e.preventDefault();
+    if (draggedLetter && draggedLetter.parentElement !== answerDiv) {
+      moveLetter(draggedLetter, answerDiv);
+      draggedLetter = null;
+    }
+  });
+
+  puzzleDiv.addEventListener('dragover', e => e.preventDefault());
+  puzzleDiv.addEventListener('drop', e => {
+    e.preventDefault();
+    if (draggedLetter && draggedLetter.parentElement !== puzzleDiv) {
+      moveLetter(draggedLetter, puzzleDiv);
+      draggedLetter = null;
+    }
+  });
+
+  checkBtn.addEventListener('click', checkAnswer);
+  hintBtn.addEventListener('click', giveHint);
+
+  loadQuestion();
+});
