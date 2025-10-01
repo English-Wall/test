@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const questions = [
     {
       word: 'abrade',
-      hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.'
+      hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.',
+      meaning: '磨損、刮除'
     }
   ];
 
   let currentQuestionIndex = 0;
-  let draggedLetter = null;
 
   function shuffleWord(word) {
     return word.split('').sort(() => Math.random() - 0.5);
@@ -54,33 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     moveLetter(e.target, puzzleDiv);
   }
 
-  function handleDragStart(e) {
-    draggedLetter = e.target;
-    e.dataTransfer.setData('text/plain', draggedLetter.textContent);
-  }
-
-  function lockLetter(letter) {
-    letter.classList.add('locked');
-    letter.setAttribute('draggable', 'false');
-    letter.removeEventListener('click', handlePuzzleLetterClick);
-    letter.removeEventListener('click', handleAnswerLetterClick);
-    letter.removeEventListener('dragstart', handleDragStart);
-  }
-
-  function giveHint() {
-    if (answerDiv.children.length > 0) {
-      hintBtn.disabled = true;
-      return;
-    }
-    const correctWord = questions[currentQuestionIndex].word;
-    const firstLetter = Array.from(puzzleDiv.children).find(l => l.textContent === correctWord[0]);
-    if (firstLetter) {
-      moveLetter(firstLetter, answerDiv);
-      lockLetter(firstLetter);
-      hintBtn.disabled = true;
-    }
-  }
-
   function checkAnswer() {
     const currentWord = questions[currentQuestionIndex].word;
     const answer = Array.from(answerDiv.children).map(l => l.textContent).join('');
@@ -90,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showRewardButton();
 
       const meaningDiv = document.createElement('div');
-      meaningDiv.innerHTML = `<strong>${currentWord}：磨損、刮除</strong>`;
+      meaningDiv.innerHTML = `<strong>${currentWord}：${current.meaning}</strong>`;
       meaningDiv.style.marginTop = '8px';
       meaningDiv.style.marginBottom = '4px';
       meaningDiv.style.fontSize = '18px';
@@ -120,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       letter.className = 'letter';
       letter.textContent = char;
       letter.style.backgroundColor = getRandomColor();
-      letter.addEventListener('dragstart', handleDragStart);
       letter.addEventListener('click', handlePuzzleLetterClick);
       puzzleDiv.appendChild(letter);
     });
@@ -132,44 +104,67 @@ document.addEventListener('DOMContentLoaded', () => {
     rewardBtn.style.display = 'block';
   }
 
-  // 綁定按鈕事件
+  // 綁定事件
   checkBtn.addEventListener('click', checkAnswer);
-  hintBtn.addEventListener('click', giveHint);
+  hintBtn.addEventListener('click', () => {
+    if (answerDiv.children.length > 0) {
+      hintBtn.disabled = true;
+      return;
+    }
+    const correctWord = questions[currentQuestionIndex].word;
+    const firstLetter = Array.from(puzzleDiv.children).find(l => l.textContent === correctWord[0]);
+    if (firstLetter) {
+      moveLetter(firstLetter, answerDiv);
+      firstLetter.classList.add('locked');
+      hintBtn.disabled = true;
+    }
+  });
 
   rewardBtn.addEventListener('click', () => {
     submissionDiv.style.display = 'block';
   });
 
-  // 送資料到 Google Sheet
+  // ✅ 提交到 Google Sheet
   submitBtn.addEventListener('click', () => {
-    const idNumber = document.getElementById('idNumber').value.trim();
-    const wordOfDay = document.getElementById('wordOfDay').value.trim();
+    const id = document.getElementById('idNumber').value.trim();
+    const word = document.getElementById('wordOfDay').value.trim();
 
-    if (!idNumber || !wordOfDay) {
-      submitFeedback.textContent = "請完整填寫所有欄位!";
+    if (!id || !word) {
+      submitFeedback.textContent = "⚠️ 請完整填寫所有欄位!";
       submitFeedback.style.color = "red";
       return;
     }
 
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxN_QRhW6F7ogSh_twhLlfMZNbSyGlzip3AmhiWHt1wJ0It4fReU53RJ5Ub5w_nWTLE/exec";
+    submitFeedback.textContent = "⏳ 正在提交...";
+    submitFeedback.style.color = "black";
+    submitBtn.disabled = true;
 
-    fetch(scriptURL, {
+    fetch("https://script.google.com/macros/s/AKfycbxN_QRhW6F7ogSh_twhLlfMZNbSyGlzip3AmhiWHt1wJ0It4fReU53RJ5Ub5w_nWTLE/exec", {
       method: "POST",
-      body: new URLSearchParams({
-        idNumber: idNumber,
-        wordOfDay: wordOfDay
-      })
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
     })
-    .then(response => {
-      submitFeedback.textContent = "✅ 提交成功!";
-      submitFeedback.style.color = "green";
+    .then(response => response.json())
+    .then(data => {
+      submitFeedback.textContent = data.message || "✅ 提交成功!";
+      submitFeedback.style.color = data.status === "success" ? "green" : "red";
+
+      if (data.status === "success") {
+        submitBtn.disabled = true;
+      } else {
+        submitBtn.disabled = false;
+      }
     })
-    .catch(error => {
+    .catch((error) => {
+      console.error("Submission error:", error);
       submitFeedback.textContent = "❌ 提交失敗，請再試一次!";
       submitFeedback.style.color = "red";
+      submitBtn.disabled = false;
     });
   });
 
-  // 載入第一題
+  // 初始化
   loadQuestion();
 });
