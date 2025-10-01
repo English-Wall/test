@@ -74,13 +74,14 @@ document.getElementById("submit").onclick = () => {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
+    ody: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
   })
   .then(() => {
     status.textContent = "✅ Submitted!";
     document.getElementById("submit").disabled = true;
   })
-  .catch(() => {
+  .catch((error) => {
+    console.error("Submission error:", error);
     status.textContent = "❌ Submission failed. Try again.";
   });
 };
