@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   let rewardShown = false;
-  const gameContainer = document.querySelector('.game-container');
   const puzzleDiv = document.querySelector('.puzzle');
   const answerDiv = document.querySelector('.answer');
   const checkBtn = document.getElementById('checkBtn');
@@ -87,14 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
       resultDiv.style.color = 'green';
       showRewardButton();
 
-   const meaningDiv = document.createElement('div');
-    meaningDiv.textContent = '磨損、刮除';
-    meaningDiv.style.marginTop = '2px';
-    meaningDiv.style.fontSize = '16px';
-    meaningDiv.style.color = '#333';
-    puzzleDiv.innerHTML = '';
-    puzzleDiv.appendChild(meaningDiv);
-
+      const meaningDiv = document.createElement('div');
+      meaningDiv.innerHTML = `<strong>${currentWord}：磨損、刮除</strong>`;
+      meaningDiv.style.marginTop = '8px';
+      meaningDiv.style.marginBottom = '4px';
+      meaningDiv.style.fontSize = '18px';
+      meaningDiv.style.color = '#333';
+      puzzleDiv.innerHTML = '';
+      puzzleDiv.appendChild(meaningDiv);
     } else {
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
@@ -129,4 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const rewardBtn = document.createElement('button');
     rewardBtn.textContent = 'Enter ID number to get reward!';
-    rewardBtn.style.backgroundColor = 'black';
+    rewardBtn.style.backgroundColor = '#333';
+    rewardBtn.style.color = 'white';
+    rewardBtn.style.padding = '12px 24px';
+    rewardBtn.style.border = 'none';
+    rewardBtn.style.borderRadius = '12px';
+    rewardBtn.style.fontSize = '1rem';
