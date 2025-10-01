@@ -87,13 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
       resultDiv.style.color = 'green';
       showRewardButton();
 
-      const meaningDiv = document.createElement('div');
-      meaningDiv.textContent = '磨損、刮除';
-      meaningDiv.style.marginTop = '2px';
-      meaningDiv.style.fontSize = '16px';
-      meaningDiv.style.color = '#333';
-      puzzleDiv.innerHTML = '';
-      puzzleDiv.appendChild(meaningDiv);
+
+　　　const meaningDiv = document.createElement('div');
+　　　meaningDiv.innerHTML = `<strong>${currentWord}：磨損、刮除</strong>`;
+　　　meaningDiv.style.marginTop = '8px';
+　　　meaningDiv.style.marginBottom = '4px';
+　　　meaningDiv.style.fontSize = '18px';
+　　　meaningDiv.style.color = '#333';
+　　　puzzleDiv.innerHTML = '';
+　　　puzzleDiv.appendChild(meaningDiv);
     } else {
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
