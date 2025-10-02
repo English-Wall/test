@@ -119,13 +119,13 @@ body {
 
     /* 減少問題框的邊距 */
     .question-frame {
-        padding: 20px;
+        padding: 16px;
     }
 
     /* 主要調整：縮小題目區的字體 
     */
     #question-text {
-        font-size: 1.3em; /* 從 1.6em 縮小 */
+        font-size: 1.1em; /* 從 1.6em 縮小 */
     }
 
     /* 縮小 Correct! 回饋訊息的字體 */
