@@ -29,7 +29,7 @@ body {
     flex-direction: column; /* 重要：改為垂直佈局 */
     height: 100%;
     width: 100%;
-    padding-bottom: 70px;
+    padding-bottom: 50px;
 }
 
 /* 新增：頂部資訊欄樣式 */
