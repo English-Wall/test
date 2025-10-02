@@ -93,3 +93,55 @@ body {
 }
 #congrats-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
 .congrats-text h1 { font-size: 3.5em; color: #fff; text-shadow: 0 0 15px rgba(0,0,0,0.8); text-align: center; }
+
+
+/* --- RWD (Responsive Web Design) for Mobile Devices --- */
+/* 當螢幕寬度小於等於 768px 時，套用以下樣式 */
+@media (max-width: 768px) {
+
+    /* 縮小開始畫面的標題和規則文字 */
+    .instructions-content h1 {
+        font-size: 1.8em;
+    }
+    .rules-list li, .instructions-content p {
+        font-size: 1em;
+    }
+
+    /* 縮小頂部資訊欄的左右邊距，爭取更多空間 */
+    .top-bar {
+        padding: 12px 5px;
+    }
+
+    /* 減少遊戲主內容區的邊距 */
+    .main-content {
+        padding: 15px;
+    }
+
+    /* 減少問題框的邊距 */
+    .question-frame {
+        padding: 20px;
+    }
+
+    /* 主要調整：縮小題目區的字體 
+    */
+    #question-text {
+        font-size: 1.3em; /* 從 1.6em 縮小 */
+    }
+
+    /* 縮小 Correct! 回饋訊息的字體 */
+    .feedback-text {
+        font-size: 1.4em;
+    }
+
+    /* 主要調整：縮小選項的字體和內邊距 
+    */
+    .option {
+        font-size: 1em; /* 從 1.3em 縮小 */
+        padding: 12px;    /* 從 18px 減少 */
+    }
+
+    /* 縮小結束畫面的標題 */
+    .congrats-text h1 {
+        font-size: 2.5em;
+    }
+}
