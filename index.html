@@ -10,16 +10,23 @@
 
     <div id="instructions-screen">
         <div class="instructions-content">
-            <h1>🎯 準備好迎戰百萬點數挑戰了嗎？</h1>
-            <p>快來證明你就是最強贏家！</p>
+            <h1>🎯 點數挑戰規則</h1>
+            <p>挑戰分為三區，題目的點數會不斷提升：</p>
+            <ul class="rules-list">
+                <li><b>第一區 (1-13題)</b>：每題 100 點</li>
+                <li><b>第二區 (14-26題)</b>：每題 300 點</li>
+                <li><b>第三區 (27-30題)</b>：每題 500 點</li>
+            </ul>
+            <p>準備好證明你就是最強贏家了嗎？</p>
             <button id="start-btn">開始遊戲</button>
         </div>
     </div>
 
     <div id="game-container" class="hidden">
-        <div class="sidebar">
-            <ul id="ladder-list">
-                </ul>
+        <div class="top-bar">
+            <div id="challenge-info">挑戰點數: <span>100點</span></div>
+            <div id="question-counter">第 <span>1</span> 題</div>
+            <div id="score-info">累積點數: <span>0點</span></div>
         </div>
 
         <div class="main-content">
@@ -27,12 +34,10 @@
                 <div class="question-frame">
                     <p id="question-text"></p>
                 </div>
-            
                 <div id="feedback-container" class="hidden">
                     <span class="feedback-text">✅ Correct!</span>
                 </div>
-                <div class="options-container" id="options-container">
-                    </div>
+                <div class="options-container" id="options-container"></div>
             </div>
         </div>
     </div>
