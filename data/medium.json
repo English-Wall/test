@@ -1,1 +1,95 @@
 
+[
+  
+{
+  "question": "There are four screws around each clock. For the left clock, do not turn the top left screw or the bottom right screw. For the right clock, do not turn the top right screw or the bottom left screw. These screws hold the mounting clamp to the instrument panel. For the left clock, the top right screw and the bottom left screw hold the clock to the mounting clamp. For the right clock, the top left screw and the bottom right screw hold the clock to the mounting clamp. Which of the following is NOT MENTIONED in the above text?",
+  "options": [
+    "左上及右下的螺絲是用來固定框夾緊貼儀表板",
+    "左邊的時鐘，左上或右下的螺絲是不可以去轉動它",
+    "每個時鐘周圍有四棵螺絲"
+  ],
+  "answer": "左上及右下的螺絲是用來固定框夾緊貼儀表板"
+},
+{
+  "question": "The eddy current nondestructive testing method is capable of detecting or measuring the following in electrically conductive materials: cracks, corrosion, thickness of non-conductive layers on conductive materials, and conductivity. Which of the followings is NOT MENTIONED in the above description?",
+  "options": [
+    "渦電流可用於偵測導電材質的厚度",
+    "渦電流可用於偵測導電材質的裂縫",
+    "渦電流可用於偵測導電材質的銹蝕"
+  ],
+  "answer": "渦電流可用於偵測導電材質的厚度"
+},
+{
+  "question": "A330/340 main wheel install the four thermal relief plugs and the overinflation plug in the fixture and pressurize the fixture with air to 17 bar (250 p. s. i. ). Apply a soap and water solution to the thermal relief plugs and the overinflation plug and check for leaks. Reject any plug that shows signs of leaking. Which of the following is NOT MENTIONED in the above text?",
+  "options": [
+    "於thermal relief plugs和Overinflation plug塗抹清潔劑，並做測漏",
+    "安裝四個Thermal relief plug以及overinflation plug於fixture上",
+    "上述的任何Plug有顯示漏氣跡象則予剔除"
+  ],
+  "answer": "於thermal relief plugs和Overinflation plug塗抹清潔劑，並做測漏"
+},
+{
+  "question": "WARNING: THE SDU CONTAINS LITHIUM AND THIONYL CHLORIDE BATTERIES. A BROKEN BATTERY CONTAINER CAN CAUSE A FIRE IF MOISTURE GETS TO THE BATTERY. Which of the following statement is NOT MENTIONED in the above text?",
+  "options": [
+    "遇高溫SDU電池會破損",
+    "SDU電池含有鋰",
+    "SDU電池含有亞硫醯氯"
+  ],
+  "answer": "遇高溫SDU電池會破損"
+},
+{
+  "question": "DO NOT LOOSEN THE NUTS BEFORE THE TIRE BEADS ARE LOOSENED FROM THE WHEEL FLANGES. NUTS THAT ARE LOOSENED BEFORE THE TIRE BEADS ARE LOOSENED CAN CAUSE DAMAGE TO MATING SURFACES OF THE WHEEL HALVES. DO NOT LOOSEN THE TIRE BEADS WITH A SHARP TOOL. A SHARP TOOL CAN CAUSE DAMAGE TO THE FLANGES OF THE WHEEL HALVES. Which of the following is NOT MENTIONED in the above text?",
+  "options": [
+    "使用精準的工具將輪胎Beads從輪胎凸緣鬆脫",
+    "鬆動螺帽會導致兩側輪轂的接觸面受損",
+    "輪胎Beads從輪胎凸緣鬆脫之前，不要鬆動螺帽"
+  ],
+  "answer": "使用精準的工具將輪胎Beads從輪胎凸緣鬆脫"
+},
+{
+  "question": "Install No. 4 roller bearing. Refer to figure 1003. CAUTION: IF YOU USE AGAIN D-HEAD BOLTS (1-260) THAT WERE REMOVED BEFORE, MAKE SURE THEIR MAXIMUM LENGTH IS NOT MORE THAN 2.195 IN. (55,75 MM). DISCARD BOLTS THAT ARE NOT WITHIN THIS MAXIMUM LENGTH LIMIT. REFER TO Figure 1004 . Which of the following is NOT MENTIONED in the above passage?",
+  "options": [
+    "使用之前拆下的D-HEAD BOLTS, 要確認其最大長度不超過2.195 IN.",
+    "參照圖1003安裝4號滾珠軸承",
+    "長度超過2.195 IN的D-HEAD BOLTS要加以裁切"
+  ],
+  "answer": "使用之前拆下的D-HEAD BOLTS, 要確認其最大長度不超過2.195 IN."
+},
+{
+  "question": "IF YOU GET ONE OF THESE MATERIALS ON YOUR SKIN, IN YOUR MOUTH OR IN YOUR EYES : - FLUSH IT AWAY WITH A FLOW OF CLEAN WATER FOR BETWEEN 10 TO 15 MINUTES. - GET IMMEDIATE MEDICAL AID IF IRRITATION OCCURS. DO NOT BREATHE THE FUMES FROM THE MATERIAL. DO NOT SMOKE WHEN YOU USE THE MATERIAL. DO NOT USE THE MATERIAL NEAR A FLAME, SPARKS OR SOURCES OF HEAT. THESE MATERIALS ARE DANGEROUS : THEY ARE POISONOUS, FLAMMABLE AND SKIN IRRITANTS. Which of the following is NOT MENTIONED in the above text?",
+  "options": [
+    "此材料時碰到皮膚嘴巴眼睛時應立即就醫",
+    "勿吸入材料之油氣",
+    "不要讓材料接近熱源"
+  ],
+  "answer": "此材料時碰到皮膚嘴巴眼睛時應立即就醫"
+},
+{
+  "question": "Seal the drain holes: CAUTION : WHEN YOU SEAL THE DRAIN HOLE IN THE PITOT PROBE, DO NOT SEAL THE HOLE DIRECTLY WITH THE COLORED ADHESIVE TAPE. ALWAYS PUT A PIECE OF PLASTIC ON THE HOLE FIRST AND USE THE COLORED ADHESIVE TAPE TO ATTACH THE PLASTIC. IF YOU SEAL THE DRAIN HOLE DIRECTLY WITH THE ADHESIVE TAPE, THERE IS A RISK THAT SOME OF THE ADHESIVE WILL STAY ON THE HOLE AND COLLECT PARTICLES. THIS CAN SUBSEQUENTLY CAUSE BLOCKAGE OF THE HOLE AND THUS INCORRECT OPERATION OF THE PROBE. Seal the drain holes of the main pitot probe with a piece of plastic and/or colored adhesive tape of very bright color. Which of the following is NOT MENTIONED in the above text?",
+  "options": [
+    "使用不會殘留膠的膠帶",
+    "排水孔殘留的膠黏劑會黏著微粒造成阻塞",
+    "排水孔阻塞會造成皮托管運作不正確"
+  ],
+  "answer": "使用不會殘留膠的膠帶"
+},
+{
+  "question": "CAUTION: The solvents in this procedure are flammable. Do not put part assemblies that contain non-metallic materials fully in solvents. Do not dip (put momentarily) the wiping cloth in the solvent container; this can cause contamination of the solvent. Which of the following statement is NOT MENTIONED in the above text?",
+  "options": [
+    "可用擦拭紙沾濕容器中的溶劑",
+    "本程序中的溶劑是可燃性",
+    "含非金屬材料的組件不可完全浸泡於此溶劑中"
+  ],
+  "answer": "可用擦拭紙沾濕容器中的溶劑"
+},
+{
+  "question": "Repair Corrision as follow: Apply mask material to threaded holes, the bushing assembly, a rivet-attached heat shield assembly, and all areas that do not have corrosion. Lightly abrasive blast only the corrded areas with glass beads or 40-80 mesh abrasive media such as steel grit, steel shot, sand or aluminum oxide. Steel grit is recommended. Which of the following is NOT MENTIONED in the above text?",
+  "options": [
+    "沒有銹蝕的部份無需塗抹遮蔽材料",
+    "只有在銹蝕部份用玻璃珠輕微吹磨",
+    "建議使用鋼砂"
+  ],
+  "answer": "沒有銹蝕的部份無需塗抹遮蔽材料"
+}
+  
+]
