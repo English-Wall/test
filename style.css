@@ -1,6 +1,6 @@
 /* --- 基本樣式重設與設定 --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
+html, body { height: 100vh; }
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: #ffffff;
@@ -29,7 +29,7 @@ body {
     flex-direction: column; /* 重要：改為垂直佈局 */
     height: 100%;
     width: 100%;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
 }
 
 /* 新增：頂部資訊欄樣式 */
