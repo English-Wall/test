@@ -152,6 +152,7 @@ body {
         width: 100%;
         text-align: center;
         z-index: 9999;
+        pointer-events: none;
     }
     
     #footer-link a {
@@ -160,4 +161,5 @@ body {
         text-decoration: underline;
         background: none;
         border: none;
+        pointer-events: auto;
     }
