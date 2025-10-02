@@ -107,17 +107,22 @@ function displayQuestion() {
     const questionHTML = currentQuestion.question.replace('___', '<span id="answer-slot"></span>');
     questionTextEl.innerHTML = questionHTML;
 
-    optionsContainer.innerHTML = '';
-    const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
+  }));
 
-    shuffledOptions.forEach(option => {
+    // 隨機排序選項
+    const shuffledOptions = optionsWithFlag.sort(() => Math.random() - 0.5);
+
+    // 顯示選項按鈕
+    optionsContainer.innerHTML = '';
+    shuffledOptions.forEach(optionObj => {
         const button = document.createElement('button');
         button.className = 'option';
-        button.textContent = option;
-        button.addEventListener('click', () => handleAnswer(option));
+        button.textContent = optionObj.text;
+        button.addEventListener('click', () => handleAnswer(optionObj));
         optionsContainer.appendChild(button);
     });
 }
+
 
 // 更新進度列高亮
 function updateLadderHighlight() {
