@@ -7,12 +7,12 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #ffffff; /* 白底 */
+    background-color: #ffffff;
     color: #333;
 }
 
 .hidden {
-    display: none !important; /* 強制隱藏 */
+    display: none !important;
 }
 
 /* --- 1. 遊戲指示畫面 --- */
@@ -25,20 +25,11 @@ body {
     padding: 20px;
 }
 
-.instructions-content h1 {
-    font-size: 2.5em;
-    margin-bottom: 15px;
-}
-
-.instructions-content p {
-    font-size: 1.2em;
-    color: #555;
-    margin-bottom: 40px;
-}
-
+.instructions-content h1 { font-size: 2.5em; margin-bottom: 15px; }
+.instructions-content p { font-size: 1.2em; color: #555; margin-bottom: 40px; }
 #start-btn {
-    background-color: #000000; /* 黑底 */
-    color: #ffffff; /* 白字 */
+    background-color: #000000;
+    color: #ffffff;
     border: none;
     padding: 15px 40px;
     font-size: 1.2em;
@@ -47,37 +38,27 @@ body {
     cursor: pointer;
     transition: transform 0.2s;
 }
-
-#start-btn:hover {
-    transform: scale(1.05);
-}
-
+#start-btn:hover { transform: scale(1.05); }
 
 /* --- 2. 遊戲主容器 --- */
-#game-container {
-    display: flex;
-    height: 100vh;
-}
+#game-container { display: flex; height: 100vh; }
 
 /* 左側邊欄 (點數) */
 .sidebar {
     width: 250px;
-    background-color: #000000; /* 黑底 */
-    color: #ffffff; /* 白字 */
+    background-color: #000000;
+    color: #ffffff;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#ladder-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column-reverse; /* 讓 100 在最下面 */
-    gap: 10px; /* 項目間距 */
-}
+#ladder-list { list-style: none; display: flex; flex-direction: column-reverse; gap: 10px; }
 
+/* [問題1 修正] 為所有點數項目設定預設的深灰色背景 */
 #ladder-list li {
+    background-color: #2c2c2c; /* 新增：預設深灰背景 */
     padding: 10px;
     text-align: center;
     font-size: 1.1em;
@@ -87,47 +68,36 @@ body {
 }
 
 /* 點數狀態顏色 */
-#ladder-list li.current {
-    background-color: #e74c3c; /* 紅底 */
-    color: #fff;
-}
-
-#ladder-list li.passed {
-    background-color: #2ecc71; /* 綠底 */
-    color: #fff;
-}
+#ladder-list li.current { background-color: #e74c3c; color: #fff; } /* 紅底 */
+#ladder-list li.passed { background-color: #2ecc71; color: #fff; } /* 綠底 */
 
 /* 右側主內容區 */
+/* [問題2 修正] 移除 align-items: center 並允許滾動 */
 .main-content {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center;  <-- 移除此行 */
     padding: 40px;
+    overflow-y: auto; /* 新增：內容過長時顯示滾動條 */
 }
 
-#game-screen {
-    width: 100%;
-    max-width: 700px;
-    text-align: center;
-}
+#game-screen { width: 100%; max-width: 700px; text-align: center; }
+.question-frame { border: 3px solid #000; padding: 30px; margin: 20px 0; }
+#question-text { font-size: 1.8em; line-height: 1.5; word-wrap: break-word; } /* 確保文字會換行 */
 
-.question-frame {
-    border: 3px solid #000; /* 黑色粗框 */
-    padding: 30px;
-    margin-bottom: 40px;
+/* [問題3 新增] 回饋訊息的樣式 */
+#feedback-container {
+    margin: 20px 0;
+    height: 40px; /* 佔一個固定高度，防止畫面跳動 */
 }
-
-#question-text {
+.feedback-text {
+    color: #27ae60;
     font-size: 1.8em;
-    line-height: 1.5;
+    font-weight: bold;
 }
 
-.options-container {
-    display: grid;
-    grid-template-columns: 1fr; /* 三個選項垂直排列 */
-    gap: 15px;
-}
+.options-container { display: grid; grid-template-columns: 1fr; gap: 15px; }
 
 .option {
     border: none;
@@ -136,43 +106,32 @@ body {
     font-weight: 500;
     border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s;
 }
-.option:hover {
-    transform: translateY(-4px);
-}
+.option:hover { transform: translateY(-4px); }
 
-/* 三個選項的顏色 */
-.option:nth-child(1) { background-color: #a7e9af; color: #145b1e; } /* 綠 */
+/* [問題4 修正] 調整選項顏色 */
+.option:nth-child(1) { background-color: #ffdac1; color: #c56c35; } /* 粉橘色 */
 .option:nth-child(2) { background-color: #a7d8e9; color: #14475b; } /* 藍 */
 .option:nth-child(3) { background-color: #e9e0a7; color: #5b5514; } /* 黃 */
 
+/* [問題3 新增] 答題後選項的狀態樣式 */
+.option.correct {
+    background-color: #2ecc71 !important; /* 強制覆蓋為綠色 */
+    color: white !important;
+    transform: scale(1.05);
+}
+.option.incorrect {
+    background-color: #f0f0f0 !important; /* 強制覆蓋為淡灰色 */
+    color: #aaa !important;
+    opacity: 0.7;
+}
 
 /* --- 3. 恭喜畫面 --- */
 #congrats-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
     background-color: rgba(0,0,0,0.7);
 }
-
-#congrats-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 讓影片填滿整個背景 */
-    z-index: -1;
-}
-
-.congrats-text h1 {
-    font-size: 5em;
-    color: #ffffff;
-    text-shadow: 0 0 15px rgba(0,0,0,0.8);
-}
+#congrats-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+.congrats-text h1 { font-size: 5em; color: #ffffff; text-shadow: 0 0 15px rgba(0,0,0,0.8); }
