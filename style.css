@@ -80,9 +80,9 @@ body {
     font-weight: 500; border-radius: 10px; cursor: pointer; transition: all 0.3s;
 }
 .option:hover { transform: translateY(-4px); }
-.option:nth-child(1) { background-color: #ffdac1; color: #c56c35; } /* 粉橘色 */
-.option:nth-child(2) { background-color: #a7d8e9; color: #14475b; } /* 藍 */
-.option:nth-child(3) { background-color: #e9e0a7; color: #5b5514; } /* 黃 */
+.option:nth-child(1) { background-color: #ffdac1; color: #FFDAB9; } /* 粉橘色 */
+.option:nth-child(2) { background-color: #a7d8e9; color: #B6D7F6; } /* 藍 */
+.option:nth-child(3) { background-color: #e9e0a7; color: #FFFFB5; } /* 黃 */
 .option.correct { background-color: #2ecc71 !important; color: white !important; transform: scale(1.05); }
 .option.incorrect { background-color: #f0f0f0 !important; color: #aaa !important; opacity: 0.7; }
 
