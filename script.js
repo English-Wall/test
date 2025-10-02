@@ -1,4 +1,4 @@
-// --- 遊戲設定 (與之前相同) ---
+// --- 遊戲設定 ---
 const EASY_COUNT = 13;
 const MEDIUM_COUNT = 13;
 const HARD_COUNT = 4;
@@ -9,7 +9,6 @@ const prizeLadder = [
 ];
 
 // --- DOM 元素 ---
-// 新增了不同畫面的 DOM 元素
 const instructionsScreen = document.getElementById('instructions-screen');
 const gameContainer = document.getElementById('game-container');
 const congratsScreen = document.getElementById('congrats-screen');
@@ -17,20 +16,17 @@ const startBtn = document.getElementById('start-btn');
 const ladderList = document.getElementById('ladder-list');
 const questionTextEl = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
+const feedbackContainer = document.getElementById('feedback-container'); // 新增：獲取回饋訊息的 DOM 元素
 
-// --- 遊戲狀態 (與之前相同) ---
+// --- 遊戲狀態 ---
 let allQuestions = { easy: [], medium: [], hard: [] };
 let gameQuestions = [];
 let currentQuestionIndex = 0;
 
 // --- 事件監聽 ---
-// 監聽 "開始遊戲" 按鈕
 startBtn.addEventListener('click', startGame);
 
-
 // --- 函式 ---
-
-// 非同步載入所有題庫 (與之前相同)
 async function loadQuestions() {
     try {
         const [easyRes, mediumRes, hardRes] = await Promise.all([
@@ -41,18 +37,15 @@ async function loadQuestions() {
         allQuestions.easy = await easyRes.json();
         allQuestions.medium = await mediumRes.json();
         allQuestions.hard = await hardRes.json();
-        console.log("題庫載入完成!");
     } catch (error) {
         console.error("無法載入題庫:", error);
     }
 }
 
-// 開始遊戲 (邏輯更新)
 function startGame() {
-    // 隱藏指示畫面，顯示遊戲主畫面
     instructionsScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
-    congratsScreen.classList.add('hidden'); // 確保恭喜畫面是隱藏的
+    congratsScreen.classList.add('hidden');
     
     prepareGameQuestions();
     currentQuestionIndex = 0;
@@ -61,7 +54,6 @@ function startGame() {
     displayQuestion();
 }
 
-// 準備30題遊戲題目 (與之前相同)
 function prepareGameQuestions() {
     const shuffle = (array) => array.sort(() => Math.random() - 0.5);
     const easySample = shuffle([...allQuestions.easy]).slice(0, EASY_COUNT);
@@ -70,7 +62,6 @@ function prepareGameQuestions() {
     gameQuestions = [...easySample, ...mediumSample, ...hardSample];
 }
 
-// 渲染進度列 (與之前相同)
 function renderLadder() {
     ladderList.innerHTML = '';
     prizeLadder.forEach((prize, index) => {
@@ -81,80 +72,96 @@ function renderLadder() {
     });
 }
 
-// 顯示當前題目 (邏輯更新)
 function displayQuestion() {
-    // 檢查是否已完成所有題目
     if (currentQuestionIndex >= gameQuestions.length) {
-        endGame(true); // 玩家獲勝
+        endGame(true);
         return;
     }
-
     updateLadderHighlight();
-
     const currentQuestion = gameQuestions[currentQuestionIndex];
-    // 直接顯示題目文字，不再替換 ___
     questionTextEl.textContent = currentQuestion.question.replace('___', '______');
-
     optionsContainer.innerHTML = '';
     const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
-
-    shuffledOptions.forEach(option => {
+    shuffledOptions.forEach(optionText => {
         const button = document.createElement('button');
         button.className = 'option';
-        button.textContent = option;
-        button.addEventListener('click', () => handleAnswer(option));
+        button.textContent = optionText;
+        button.addEventListener('click', handleAnswer); // 直接傳遞 event
         optionsContainer.appendChild(button);
     });
 }
 
-// 更新進度列高亮 (邏輯相同，但 CSS 效果不同)
 function updateLadderHighlight() {
     const ladderItems = ladderList.querySelectorAll('li');
     ladderItems.forEach(item => {
         const index = parseInt(item.dataset.index);
-        item.classList.remove('current', 'passed'); // 先清除所有狀態
+        item.classList.remove('current', 'passed');
         if (index < currentQuestionIndex) {
-            item.classList.add('passed'); // 已通過的題目 (綠底)
+            item.classList.add('passed');
         } else if (index === currentQuestionIndex) {
-            item.classList.add('current'); // 當前題目 (紅底)
+            item.classList.add('current');
         }
     });
 }
 
-// 處理玩家答案 (邏輯更新)
-function handleAnswer(selectedOption) {
-    // 暫時禁用選項按鈕，防止連續點擊
-    optionsContainer.querySelectorAll('.option').forEach(btn => btn.disabled = true);
-
+// [問題3 修正] handleAnswer 函式重大更新
+function handleAnswer(event) {
+    const selectedButton = event.target;
+    const selectedOption = selectedButton.textContent;
     const correctAnswer = gameQuestions[currentQuestionIndex].answer;
-    
+    const allOptionButtons = optionsContainer.querySelectorAll('.option');
+
+    // 禁用所有按鈕
+    allOptionButtons.forEach(btn => btn.disabled = true);
+
     if (selectedOption === correctAnswer) {
-        // 答對了
+        // --- 答對了 ---
+        // 顯示回饋訊息
+        feedbackContainer.classList.remove('hidden');
+
+        // 標示正確與錯誤選項
+        allOptionButtons.forEach(btn => {
+            if (btn.textContent === correctAnswer) {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('incorrect');
+            }
+        });
+
+        // 停頓 1.5 秒後執行
         setTimeout(() => {
+            feedbackContainer.classList.add('hidden'); // 隱藏回饋
             currentQuestionIndex++;
             displayQuestion();
-        }, 1000); // 延遲 1 秒後跳到下一題
+        }, 1500); // 延遲 1.5 秒
     } else {
-        // 答錯了
+        // --- 答錯了 ---
+        // 答錯時，將選錯的選項標紅，正確答案標綠
+        allOptionButtons.forEach(btn => {
+            if (btn === selectedButton) {
+                // 將 CSS 的 .current (紅色) 樣式暫時用在按鈕上
+                btn.style.backgroundColor = '#e74c3c';
+                btn.style.color = 'white';
+            }
+            if (btn.textContent === correctAnswer) {
+                btn.classList.add('correct');
+            }
+        });
+
         setTimeout(() => {
             endGame(false);
-        }, 1000);
+        }, 2000); // 答錯後停頓久一點，讓玩家看到正確答案
     }
 }
 
-// 結束遊戲 (邏輯更新)
 function endGame(isWinner) {
-    gameContainer.classList.add('hidden'); // 隱藏遊戲主畫面
-
+    gameContainer.classList.add('hidden');
     if (isWinner) {
-        // 顯示恭喜畫面
         congratsScreen.classList.remove('hidden');
         const video = document.getElementById('congrats-video');
-        video.play(); // 播放影片
+        if (video) video.play();
     } else {
-        // 如果答錯了，可以簡單地 alert 或導回指示畫面
         alert('可惜，答錯了！再試一次吧！');
-        // 重新載入頁面回到初始狀態
         window.location.reload();
     }
 }
