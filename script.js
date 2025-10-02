@@ -1,188 +1,25 @@
-document.addEventListener('DOMContentLoaded', () => {
-  let rewardShown = false;
-  const puzzleDiv = document.querySelector('.puzzle');
-  const answerDiv = document.querySelector('.answer');
-  const checkBtn = document.getElementById('checkBtn');
-  const hintBtn = document.getElementById('hintBtn');
-  const resultDiv = document.getElementById('result');
-  const hintP = document.querySelector('.hint p');
-  const rewardBtn = document.getElementById('reward');
-  const submissionDiv = document.getElementById('submission');
-  const submitBtn = document.getElementById('submit');
-  const submitFeedback = document.getElementById('submitFeedback');
+// 遊戲設定
+const EASY_COUNT = 13;
+const MEDIUM_COUNT = 13;
+const HARD_COUNT = 4;
 
-const questions = [
-  {
-    word: 'abrade',
-    hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.',
-    meaning: '磨損、刮除'
-  },
-  {
-    word: 'benevolent',
-    hint: 'Well meaning and kindly.',
-    meaning: '仁慈的、善意的'
-  },
-  {
-    word: 'candid',
-    hint: 'Truthful and straightforward.',
-    meaning: '坦率的、直言的'
-  },
+const prizeLadder = [
+    100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, // 簡單
+    300000, 350000, 400000, 450000, 500000, 550000, 600000, 650000, 700000, 750000, 800000, 850000, 900000, // 中等
+    925000, 950000, 975000, 1000000 // 困難
 ];
 
-  let currentQuestionIndex = 0;
+// DOM 元素
+const startScreen = document.getElementById('start-screen');
+const gameScreen = document.getElementById('game-screen');
+const endScreen = document.getElementById('end-screen');
+const startBtn = document.getElementById('start-btn');
+const restartBtn = document.getElementById('restart-btn');
+const ladderList = document.getElementById('ladder-list');
+const questionTextEl = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options-container');
 
-  function shuffleWord(word) {
-    return word.split('').sort(() => Math.random() - 0.5);
-  }
-
-  function getRandomColor() {
-    const colors = ['#f7b7b7', '#b7d7f7', '#d7f7b7'];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  function moveLetter(letter, targetDiv) {
-    if (!letter || letter.classList.contains('locked')) return;
-    targetDiv.appendChild(letter);
-    updateClickHandler(letter);
-  }
-
-  function updateClickHandler(letter) {
-    letter.removeEventListener('click', handlePuzzleLetterClick);
-    letter.removeEventListener('click', handleAnswerLetterClick);
-    if (letter.parentElement === puzzleDiv) {
-      letter.addEventListener('click', handlePuzzleLetterClick);
-    } else {
-      letter.addEventListener('click', handleAnswerLetterClick);
-    }
-  }
-
-  function handlePuzzleLetterClick(e) {
-    moveLetter(e.target, answerDiv);
-  }
-
-  function handleAnswerLetterClick(e) {
-    moveLetter(e.target, puzzleDiv);
-  }
-
-function checkAnswer() {
-  const current = window.currentQuestion; // 從 loadQuestion 記錄的題目
-  const currentWord = current.word;
-  const answer = Array.from(answerDiv.children).map(l => l.textContent).join('');
-
-  if (answer === currentWord) {
-    resultDiv.textContent = 'Correct!';
-    resultDiv.style.color = 'green';
-    showRewardButton();
-
-    const meaningDiv = document.createElement('div');
-    meaningDiv.innerHTML = `<strong>${currentWord}：${current.meaning}</strong>`;
-    meaningDiv.style.marginTop = '8px';
-    meaningDiv.style.marginBottom = '4px';
-    meaningDiv.style.fontSize = '18px';
-    meaningDiv.style.color = '#333';
-
-    puzzleDiv.innerHTML = '';
-    puzzleDiv.appendChild(meaningDiv);
-  } else {
-    resultDiv.textContent = 'Try Again!';
-    resultDiv.style.color = 'red';
-    setTimeout(loadQuestion, 1200);
-  }
-}
-
-function loadQuestion() {
-  puzzleDiv.innerHTML = '';
-  answerDiv.innerHTML = '';
-  resultDiv.textContent = '';
-  hintBtn.disabled = false;
-  rewardBtn.style.display = 'none';
-  submissionDiv.style.display = 'none';
-  rewardShown = false;
-
-  // 隨機抽一題
-  const current = questions[Math.floor(Math.random() * questions.length)];
-
-  hintP.textContent = `Hint: ${current.hint}`;
-  shuffleWord(current.word).forEach(char => {
-    const letter = document.createElement('div');
-    letter.className = 'letter';
-    letter.textContent = char;
-    letter.style.backgroundColor = getRandomColor();
-    letter.addEventListener('click', handlePuzzleLetterClick);
-    puzzleDiv.appendChild(letter);
-  });
-
-  // 記錄當前題目（方便 checkAnswer 使用）
-  window.currentQuestion = current;
-}
-
-  function showRewardButton() {
-    if (rewardShown) return;
-    rewardShown = true;
-    rewardBtn.style.display = 'block';
-  }
-
-  // 綁定事件
-  checkBtn.addEventListener('click', checkAnswer);
-  hintBtn.addEventListener('click', () => {
-    if (answerDiv.children.length > 0) {
-      hintBtn.disabled = true;
-      return;
-    }
-    const correctWord = questions[currentQuestionIndex].word;
-    const firstLetter = Array.from(puzzleDiv.children).find(l => l.textContent === correctWord[0]);
-    if (firstLetter) {
-      moveLetter(firstLetter, answerDiv);
-      firstLetter.classList.add('locked');
-      hintBtn.disabled = true;
-    }
-  });
-
-  rewardBtn.addEventListener('click', () => {
-    submissionDiv.style.display = 'block';
-  });
-
-  // ✅ 提交到 Google Sheet
-  submitBtn.addEventListener('click', () => {
-    const id = document.getElementById('idNumber').value.trim();
-    const word = document.getElementById('wordOfDay').value.trim();
-
-    if (!id || !word) {
-      submitFeedback.textContent = "⚠️ 請完整填寫所有欄位!";
-      submitFeedback.style.color = "red";
-      return;
-    }
-
-    submitFeedback.textContent = "⏳ 正在提交...";
-    submitFeedback.style.color = "black";
-    submitBtn.disabled = true;
-
-    fetch("https://script.google.com/macros/s/AKfycbxN_QRhW6F7ogSh_twhLlfMZNbSyGlzip3AmhiWHt1wJ0It4fReU53RJ5Ub5w_nWTLE/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `id=${encodeURIComponent(id)}&word=${encodeURIComponent(word)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-      submitFeedback.textContent = data.message || "✅ 提交成功!";
-      submitFeedback.style.color = data.status === "success" ? "green" : "red";
-
-      if (data.status === "success") {
-        submitBtn.disabled = true;
-      } else {
-        submitBtn.disabled = false;
-      }
-    })
-    .catch((error) => {
-      console.error("Submission error:", error);
-      submitFeedback.textContent = "❌ 提交失敗，請再試一次!";
-      submitFeedback.style.color = "red";
-      submitBtn.disabled = false;
-    });
-  });
-
-  // 初始化
-  loadQuestion();
-});
+// 遊戲狀態
+let allQuestions = { easy: [], medium: [], hard: [] };
+let gameQuestions = [];
+let currentQuestionIndex = 0;
