@@ -22,7 +22,7 @@ const feedbackContainer = document.getElementById('feedback-container');
 let allQuestions = { easy: [], medium: [], hard: [] };
 let gameQuestions = [];
 let currentQuestionIndex = 0;
-let cumulativeScore = 0; // 新增：累積點數變數
+let cumulativeScore = 0; 
 
 // --- 事件監聽 ---
 startBtn.addEventListener('click', startGame);
@@ -104,7 +104,7 @@ function handleAnswer(event) {
             feedbackContainer.classList.add('hidden');
             currentQuestionIndex++;
             displayQuestion();
-        }, 1500);
+        }, 2000);
     } else {
         selectedButton.style.backgroundColor = '#e74c3c';
         selectedButton.style.color = 'white';
@@ -112,7 +112,7 @@ function handleAnswer(event) {
             if (btn.textContent === correctAnswer) btn.classList.add('correct');
         });
 
-        setTimeout(() => endGame(false), 2000);
+        setTimeout(() => endGame(false), 2500);
     }
 }
 
