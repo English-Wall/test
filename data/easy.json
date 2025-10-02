@@ -420,7 +420,7 @@
 { "question": "Read the pressure _______ shown on the pressure gauge.", "options": ["value", "issue", "venue"], "answer": "value" },
 { "question": "The butterfly type _______ operates when the solenoid is energized.", "options": ["valve", "valid", "vague"], "answer": "valve" },
 { "question": "A _______ line between the drain mast and the drain tank ventilates the drain tank and lines.", "options": ["vent", "dent", "rent"], "answer": "vent" },
-{ "question": "When the escape slides are armed, the "SLIDE" message comes into _______ in white.", "options": ["view", "vine", "virus"], "answer": "view" },
+{ "question": "When the escape slides are armed, the <u>SLIDE</u> message comes into _______ in white.", "options": ["view", "vine", "virus"], "answer": "view" },
 { "question": "The aircraft provides 28 _______ DC power to the EEC for operation of the engine HP fuel shut off valve latching torque motor.", "options": ["Volt", "Vote", "Void"], "answer": "Volt" },
 { "question": "These lamps are supplied by an alternating current with variable _______ from 0 to 5 volts.", "options": ["voltage", "village", "vintage"], "answer": "voltage" },
 { "question": "The door _______ system tells the crew if the doors are locked or unlocked.", "options": ["warning", "mooning", "meaning"], "answer": "warning" },
