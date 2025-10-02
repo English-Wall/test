@@ -1,1 +1,14 @@
 
+[
+  {
+    "question": "The sun ___ in the east.",
+    "options": ["rises", "sets", "sleeps"],
+    "answer": "rises"
+  },
+  {
+    "question": "An apple a day keeps the ___ away.",
+    "options": ["teacher", "doctor", "friend"],
+    "answer": "doctor"
+  },
+  // ... 其他 498 題
+]
