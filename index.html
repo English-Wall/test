@@ -1,36 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word Scramble Game</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百萬大富翁 - 英文填空遊戲</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="game-container">
-    <h1>Word Scramble Game</h1>
-    <div class="hint"><p></p></div>
-    <div class="puzzle"></div>
-    <div class="answer"></div>
-    <div class="button-container">
-      <button id="checkBtn">Check Answer</button>
-      <button id="hintBtn">Hint</button>  
-    </div>
-    <div id="result"></div>
-    <div id="rewardContainer"></div>
+    <div class="game-container">
+        <div class="progress-ladder">
+            <ul id="ladder-list">
+                </ul>
+        </div>
 
-    <!-- 答對後才會顯示的按鈕 -->
-    <button id="reward" style="display:none;">Enter ID number to get reward!</button>
+        <div class="game-area">
+            <div id="start-screen">
+                <h1>英文填空挑戰</h1>
+                <button id="start-btn">開始遊戲</button>
+            </div>
 
-    <!-- 輸入區塊 -->
-    <div id="submission" style="display: none; margin-top: 20px;">
-      <input type="text" id="idNumber" placeholder="請輸入您的員工號" />
-      <input type="text" id="wordOfDay" placeholder="今天學到的單字是?" />
-      <button id="submit">Submit</button>
-      <div id="submitFeedback"></div>
+            <div id="game-screen" class="hidden">
+                <div class="question-container">
+                    <p id="question-text"></p>
+                </div>
+                <div class="options-container" id="options-container">
+                    </div>
+            </div>
+            
+            <div id="end-screen" class="hidden">
+                <h2 id="end-message"></h2>
+                <button id="restart-btn">重新開始</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
