@@ -1,6 +1,3 @@
-/* --- Google Font --- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
 /* --- 基本樣式重設與設定 --- */
 * {
     box-sizing: border-box;
@@ -9,173 +6,173 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    display: flex; /* 使用 Flexbox 進行左右佈局 */
-    height: 100vh;
-    background-color: #f0f2f5; /* 主背景色 */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff; /* 白底 */
+    color: #333;
 }
 
-/* --- 左側邊欄 --- */
+.hidden {
+    display: none !important; /* 強制隱藏 */
+}
+
+/* --- 1. 遊戲指示畫面 --- */
+#instructions-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.instructions-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+.instructions-content p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+#start-btn {
+    background-color: #000000; /* 黑底 */
+    color: #ffffff; /* 白字 */
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#start-btn:hover {
+    transform: scale(1.05);
+}
+
+
+/* --- 2. 遊戲主容器 --- */
+#game-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 左側邊欄 (點數) */
 .sidebar {
-    width: 280px;
-    background-color: #1e1e1e; /* 深色背景 */
-    color: #f5f5f5;
+    width: 250px;
+    background-color: #000000; /* 黑底 */
+    color: #ffffff; /* 白字 */
     padding: 20px;
     display: flex;
     flex-direction: column;
-}
-
-.sidebar-header {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #444;
-}
-
-.sidebar-header h2 {
-    font-size: 1.8em;
-    text-align: center;
-}
-
-.progress-ladder {
-    flex-grow: 1; /* 佔滿剩餘空間 */
+    justify-content: center;
 }
 
 #ladder-list {
     list-style: none;
     display: flex;
     flex-direction: column-reverse; /* 讓 100 在最下面 */
-    height: 100%;
-    justify-content: space-around; /* 均勻分佈點數 */
+    gap: 10px; /* 項目間距 */
 }
 
 #ladder-list li {
-    padding: 8px 15px;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
     border-radius: 5px;
-    font-weight: 500;
-    color: #a0a0a0; /* 未達到的點數顏色 */
-    transition: all 0.3s ease;
-    text-align: left;
+    transition: background-color 0.4s ease;
+}
+
+/* 點數狀態顏色 */
+#ladder-list li.current {
+    background-color: #e74c3c; /* 紅底 */
+    color: #fff;
 }
 
 #ladder-list li.passed {
-    color: #666; /* 已通過的點數顏色 */
+    background-color: #2ecc71; /* 綠底 */
+    color: #fff;
 }
 
-#ladder-list li.current {
-    background-color: #333; /* 當前題目高亮 */
-    color: #ffffff; /* 高亮文字顏色 */
-    transform: translateX(10px);
-}
-
-
-/* --- 右側主內容區 --- */
+/* 右側主內容區 */
 .main-content {
-    flex-grow: 1; /* 佔滿剩餘寬度 */
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
 }
 
-.game-area {
+#game-screen {
     width: 100%;
-    max-width: 800px;
+    max-width: 700px;
     text-align: center;
 }
 
-#start-screen h1, #end-screen h2 {
-    color: #333;
-    margin-bottom: 20px;
-}
-#start-screen p {
-    color: #666;
-    margin-bottom: 30px;
-}
-
-
-/* --- 題目與答案區 --- */
-.question-container {
-    font-size: 1.5em; /* 調整字體大小 */
-    color: #333;
+.question-frame {
+    border: 3px solid #000; /* 黑色粗框 */
+    padding: 30px;
     margin-bottom: 40px;
-    line-height: 1.6;
 }
 
-#answer-slot {
-    display: inline-block;
-    min-width: 200px;
-    height: 50px;
-    border: 1px solid #ccc; /* 簡潔的邊框 */
-    border-radius: 8px;
-    background-color: #ffffff;
-    vertical-align: middle;
-    line-height: 50px;
-    padding: 0 15px;
-    font-weight: 600;
-    color: #2c3e50;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+#question-text {
+    font-size: 1.8em;
+    line-height: 1.5;
 }
 
 .options-container {
-    display: flex; /* 讓選項橫向排列 */
-    justify-content: center;
-    gap: 20px; /* 選項間的距離 */
-    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr; /* 三個選項垂直排列 */
+    gap: 15px;
 }
 
 .option {
     border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
+    padding: 20px;
+    font-size: 1.5em;
     font-weight: 500;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
 }
-
 .option:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+    transform: translateY(-4px);
 }
 
-/* 根據圖片風格設定三個選項的顏色 */
-.option:nth-child(1) {
-    background-color: #ffebee; /* 淡紅色 */
-    color: #c62828;
+/* 三個選項的顏色 */
+.option:nth-child(1) { background-color: #a7e9af; color: #145b1e; } /* 綠 */
+.option:nth-child(2) { background-color: #a7d8e9; color: #14475b; } /* 藍 */
+.option:nth-child(3) { background-color: #e9e0a7; color: #5b5514; } /* 黃 */
+
+
+/* --- 3. 恭喜畫面 --- */
+#congrats-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.7);
 }
 
-.option:nth-child(2) {
-    background-color: #e3f2fd; /* 淡藍色 */
-    color: #1565c0;
+#congrats-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 讓影片填滿整個背景 */
+    z-index: -1;
 }
 
-.option:nth-child(3) {
-    background-color: #e8f5e9; /* 淡綠色 */
-    color: #2e7d32;
-}
-
-/* --- 通用按鈕樣式 --- */
-.btn {
-    border: none;
-    color: white;
-    padding: 12px 30px;
-    font-size: 1.1em;
-    font-weight: 500;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-green {
-    background-color: #2ecc71; /* 綠色 */
-}
-
-.btn-green:hover {
-    background-color: #27ae60;
-}
-
-/* --- 顯示/隱藏 --- */
-.hidden {
-    display: none;
+.congrats-text h1 {
+    font-size: 5em;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(0,0,0,0.8);
 }
