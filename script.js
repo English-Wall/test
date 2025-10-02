@@ -143,25 +143,22 @@ function updateLadderHighlight() {
 
 
 // 處理玩家答案
-function handleAnswer(selectedOption) {
-    const correctAnswer = gameQuestions[currentQuestionIndex].answer;
-    
-    if (selectedOption === correctAnswer) {
+function handleAnswer(selectedOptionObj) {
+    if (selectedOptionObj.isCorrect) {
         // 答對了
-        document.getElementById('answer-slot').textContent = correctAnswer;
-        // 視覺回饋 (可以做得更炫)
+        document.getElementById('answer-slot').textContent = selectedOptionObj.text;
         document.getElementById('answer-slot').style.borderColor = 'green';
-        
+
         setTimeout(() => {
             currentQuestionIndex++;
             displayQuestion();
-        }, 1500); // 延遲 1.5 秒後跳到下一題
-
+        }, 1500);
     } else {
         // 答錯了
         endGame(false);
     }
 }
+
 
 // 結束遊戲
 function endGame(isWinner) {
