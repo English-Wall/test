@@ -7,16 +7,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>English Wall</h2>
+        </div>
         <div class="progress-ladder">
             <ul id="ladder-list">
                 </ul>
         </div>
+    </div>
 
+    <div class="main-content">
         <div class="game-area">
             <div id="start-screen">
-                <h1>英文填空挑戰</h1>
-                <button id="start-btn">開始遊戲</button>
+                <h1>英文單字填空挑戰</h1>
+                <p>準備好成為百萬富翁了嗎？</p>
+                <button id="start-btn" class="btn btn-green">開始遊戲</button>
             </div>
 
             <div id="game-screen" class="hidden">
@@ -29,7 +35,7 @@
             
             <div id="end-screen" class="hidden">
                 <h2 id="end-message"></h2>
-                <button id="restart-btn">重新開始</button>
+                <button id="restart-btn" class="btn btn-green">重新開始</button>
             </div>
         </div>
     </div>
