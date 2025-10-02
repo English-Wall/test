@@ -95,24 +95,6 @@ body {
 .congrats-text h1 { font-size: 3.5em; color: #fff; text-shadow: 0 0 15px rgba(0,0,0,0.8); text-align: center; }
 
 
-    #footer-link {
-        position: fixed;
-        bottom: 10px;
-        width: 100%;
-        text-align: center;
-        z-index: 9999;
-    }
-    
-    #footer-link a {
-        font-size: 0.8em;
-        color: #aaa;
-        text-decoration: underline;
-        background: none;
-        border: none;
-    }
-
-
-
 /* --- RWD (Responsive Web Design) for Mobile Devices --- */
 /* 當螢幕寬度小於等於 768px 時，套用以下樣式 */
 @media (max-width: 768px) {
@@ -164,4 +146,18 @@ body {
     }
 }
 
-
+    #footer-link {
+        position: fixed;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        z-index: 9999;
+    }
+    
+    #footer-link a {
+        font-size: 0.8em;
+        color: #aaa;
+        text-decoration: underline;
+        background: none;
+        border: none;
+    }
