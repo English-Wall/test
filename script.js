@@ -22,12 +22,15 @@ const feedbackContainer = document.getElementById('feedback-container');
 let allQuestions = { easy: [], medium: [], hard: [] };
 let gameQuestions = [];
 let currentQuestionIndex = 0;
-let cumulativeScore = 0; 
+let cumulativeScore = 0;
 
-// --- 事件監聽 ---
-startBtn.addEventListener('click', startGame);
+// --- 題庫載入狀態 ---
+let questionsLoaded = false;
 
-// --- 主要函式 ---
+// 頁面載入時，先禁用開始按鈕
+startBtn.disabled = true;
+
+// --- 載入題庫 ---
 async function loadQuestions() {
     try {
         const [easyRes, mediumRes, hardRes] = await Promise.all([
@@ -36,20 +39,33 @@ async function loadQuestions() {
         allQuestions.easy = await easyRes.json();
         allQuestions.medium = await mediumRes.json();
         allQuestions.hard = await hardRes.json();
+        questionsLoaded = true;
+        startBtn.disabled = false; // 題庫載入完成才可開始
     } catch (error) {
         console.error("無法載入題庫:", error);
+        alert("題庫載入失敗，請重新整理頁面！");
     }
 }
 
+// --- 事件監聽 ---
+startBtn.addEventListener('click', () => {
+    if (!questionsLoaded) {
+        alert('題庫尚未載入完成，請稍候！');
+        return;
+    }
+    startGame();
+});
+
+// --- 主要函式 ---
 function startGame() {
     instructionsScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
     congratsScreen.classList.add('hidden');
-    
+
     prepareGameQuestions();
     currentQuestionIndex = 0;
     cumulativeScore = 0; // 重置分數
-    
+
     displayQuestion();
 }
 
@@ -130,7 +146,7 @@ function endGame(isWinner) {
 
 // --- 輔助函式 ---
 
-// 新增：根據題號獲取對應點數
+// 根據題號獲取對應點數
 function getQuestionValue(index) {
     const questionNumber = index + 1;
     if (questionNumber <= EASY_COUNT) {
@@ -142,7 +158,7 @@ function getQuestionValue(index) {
     }
 }
 
-// 新增：更新頂部資訊欄的函式
+// 更新頂部資訊欄
 function updateTopBar() {
     const questionNumber = currentQuestionIndex + 1;
     const challengePoints = getQuestionValue(currentQuestionIndex);
