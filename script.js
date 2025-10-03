@@ -132,17 +132,26 @@ function handleAnswer(event) {
     }
 }
 
+
 function endGame(isWinner) {
     gameContainer.classList.add('hidden');
     if (isWinner) {
         congratsScreen.classList.remove('hidden');
         const video = document.getElementById('congrats-video');
         if (video) video.play();
+
+        // 🎉 加入灑彩蛋動畫
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
     } else {
         alert(`遊戲結束！您的最終點數是: ${cumulativeScore}點`);
         window.location.reload();
     }
 }
+
 
 // --- 輔助函式 ---
 
